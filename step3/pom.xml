@@ -1,0 +1,8 @@
+<project>
+
+<modelVersion> 4.0.0 </modelVersion>
+<groupId>fi.arch26</groupId>
+<artifactId>slowmaven </artifactId>
+<version>1.0-SNAPSHOT </version>
+
+</project>
