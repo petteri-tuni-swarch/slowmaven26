@@ -13,8 +13,15 @@ We won't stay in this step too long. But it is possible to write Java without bu
 
 # Step 2 - Maven as compilation tool
 
-Start using Maven. It means there will be at least pom.xml needed. What else? Where should we place the Java source file? Can it stay in the root with new pom.xml?
-
+Start using Maven. It means there will be at least pom.xml needed.
+Where should we place the Java source file? Can it stay in the root as before.
 How to compile the code? And how to run the code? How to create JAR file?
+
+# Step 3a - Adding more source code files
+
+# Step 3b - Organizing the code to packages
+
+# Step 4 - Separating the code to two independent Maven projects
+
 
 
