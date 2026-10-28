@@ -215,6 +215,50 @@ Car not found: ABC-12
 ** Contains all the bytecode needed - including from external dependencies like triputils in this case
 ** Knows the location of main() - the entry point to start execution. 
 
+## Implementation
+
+Now the "by heart" requirements starts to be challenging. The definitions to add will be quite tough.
+The plugin for creating the "FAT-JAR" is __maven-assembly-plugin__
+Many times the version for the maven-compiler is also fixed by introducing plugin __maven-compiler-plugin__ explicitly.
+
+The resulting build-section of the pom.xml will be as follows:
+
+````
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.4.2</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>fi.arch26.taxicars.App</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+````
 
 # Step 6 - Demonstrating independent development of the two projects
 
