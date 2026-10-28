@@ -1,0 +1,17 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fi.arch26</groupId>
+	<artifactId>taxicars</artifactId>
+	<version>1 </version>
+
+<dependencies>
+
+<dependency>
+	<groupId>fi.arch26</groupId>
+	<artifactId>triputils</artifactId>
+	<version>1.0.0</version>
+</dependency>
+
+</dependencies>
+
+</project>
