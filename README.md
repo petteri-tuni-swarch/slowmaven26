@@ -260,10 +260,24 @@ The resulting build-section of the pom.xml will be as follows:
   </build>
 ````
 
-# Step 6 - Demonstrating independent development of the two projects
+# Step 6 - More decent implementation. Equipping the project with tests
+
+Codex to rescue:
+
+1. Make the entry point portable. In App.java (garage/src/main/java/App.java:5), change main() to main(String[] args). The current form works on Java 25 but will fail on older Java runtimes, despite the build targeting Java 8.
+
+2. Make the two-module build reproducible. Add a root Maven POM containing triputils and garage, preferably also serving as their parent. Currently, garage/pom.xml (garage/pom.xml:8) resolves an installed triputils artifact; building the sibling source does not automatically update that dependency. A reactor build would let mvn clean verify build both together.
+
+3. Declare the Java target and encoding. Set maven.compiler.release and project.build.sourceEncoding centrally, and pin the build plugins used by both modules. The current build emits compiler and encoding warnings. Choose the Java release you actually intend to support.
+
+4. Protect basic data integrity. Make the fields in Car.java (garage/src/main/java/Car.java:4) private final, with getters. A mutable plate can become inconsistent with its map key. Reject null cars, blank model/plate values, and negative distances; explicitly decide whether duplicate plates replace a car or cause an error.
+
+5. Add a small, meaningful test suite. Cover the cost calculation, zero and negative distances, adding/finding cars, unknown plates, and duplicate plates. Include a packaged-JAR launch check—the current successful Maven build does not validate the entry point.
+
+6. Clean up and document. Move garage sources under src/main/java/fi/arch26/taxicars/, remove redundant .orig, pom.bk1, and foo.xml files if obsolete, ignore target/, and add a short README with prerequisites and build/run commands.
 
 
-# Step 7 - Equipping the project with tests
+# Step 7 - Demonstrating independent development of the two projects
 
 
 # END

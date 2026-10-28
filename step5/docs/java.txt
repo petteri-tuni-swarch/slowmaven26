@@ -1,0 +1,93 @@
+=== ./triputils/src/main/java/fi/arch26/triputils/TripCost.java =========
+
+package fi.arch26.triputils;
+
+public class TripCost {
+
+    final double multiplier = 0.073;
+
+    public double calcCost(String model, int distance) {
+        double cost = distance * multiplier;
+        return cost;
+    }
+}
+=== ./garage/src/main/java/Car.java =========
+
+package fi.arch26.taxicars;
+
+public class Car {
+    protected String model;
+    protected String plate;
+
+    public Car (String model, String plate) {
+        this.model = model;
+        this.plate = plate;
+    }
+}
+
+
+=== ./garage/src/main/java/Garage.java =========
+
+package fi.arch26.taxicars;
+
+import java.util.HashMap;
+import fi.arch26.triputils.TripCost;
+
+/*
+TODO:
+* This is the home for all the cars in our Garage.
+Add a HashMap that store the cars. Key: plate, hash members: model, brand, motor etc
+Add a reporting method
+Add a trip cost calculation
+*/
+
+public class Garage {
+
+    private TripCost tripCost = new TripCost();
+
+    protected HashMap<String,Car> carMap = new HashMap<String,Car>();
+    public void addCar(Car car) {
+        carMap.put(car.plate, car);
+    }
+
+    public void reportCars() {
+        for(String plate: carMap.keySet()) {
+            Car car = carMap.get(plate);
+            System.out.println("Plate: " + car.plate + " - Model: " + car.model);
+        }
+    }
+
+    public void reportTrip(String plate, int distance) {
+        Car car = carMap.get(plate);
+        if (car != null) {
+            double cost = tripCost.calcCost(car.model, distance);
+            System.out.println("Trip with model "+car.model+" and distance "+distance+" will cost "+cost);
+        } else {
+            System.out.println("Car not found: " + plate);
+        }
+    }
+}
+
+=== ./garage/src/main/java/App.java =========
+
+package fi.arch26.taxicars;
+
+public class App {
+
+    public static void main() {
+
+        System.out.println("Step 5: triputils external JAR. Added maven-assembly-plugin to create executable all encompassing JAR");
+
+        Garage garage = new Garage();
+        Car car = new Car("Audi A3", "ABC-123");
+        garage.addCar(car);
+        garage.reportCars();
+
+        garage.reportTrip("ABC-123", 100);
+        garage.reportTrip("ABC-12", 100);
+
+
+    }
+
+}
+
